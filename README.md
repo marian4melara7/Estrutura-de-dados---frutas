@@ -1,5 +1,7 @@
 
-  Sistema de Estoque de Frutas
+      Sistema de Estoque de Frutas
+  
+  
   Um sistema simples e didático para gerenciar estoque e vendas de frutas usando Python, POO e estruturas de dados.
 Ideal para estudos de listas, filas, pilhas e manipulação de arquivos.
     
