@@ -47,7 +47,7 @@ class SistemaEstoque:
         try:
             with open("estoque.txt", "w") as file:
                 for produto in self.produtos:
-                    file.write(f"PRODUTO,{produto.nome},{produto.quantidade},{produto.preco}\n")
+                    file.write(f"PRODUTO,{produto.nome},{produto.quantidade:.2f},{produto.preco}\n")
                 for cliente in self.clientes:
                     file.write(f"CLIENTE,{cliente.nome},{cliente.total_gasto}\n")
                 file.write(f"TOTAL_ESTOQUE,{self.valor_total_estoque()}\n")
@@ -64,7 +64,7 @@ class SistemaEstoque:
                         parts = line.strip().split(",")
                         if parts[0] == "PRODUTO" and len(parts) == 4:
                             _, nome, quantidade, preco = parts
-                            fruta = Fruta(nome, int(quantidade), float(preco))
+                            fruta = Fruta(nome, float(quantidade), float(preco))
                             self.produtos.append(fruta)
                         elif parts[0] == "CLIENTE" and len(parts) == 3:
                             _, nome, total_gasto = parts
@@ -132,22 +132,28 @@ class SistemaEstoque:
             print("Fruta não encontrada.")
             return
 
-        qtd = int(input("Digite a quantidade (kg): "))
-        if qtd > fruta.quantidade:
-            print("Quantidade indisponível no estoque!")
-            return
+        try:
+            qtd = float(input("Digite a quantidade (kg): "))
+            if qtd <= 0:
+                print("Quantidade deve ser maior que zero!")
+                return
+            if qtd > fruta.quantidade:
+                print("Quantidade indisponível no estoque!")
+                return
 
-        fruta.quantidade -= qtd
-        venda = Venda(cliente, fruta, qtd)
-        cliente.total_gasto += venda.valor_total
-        self.total_vendas += venda.valor_total
+            fruta.quantidade -= qtd
+            venda = Venda(cliente, fruta, qtd)
+            cliente.total_gasto += venda.valor_total
+            self.total_vendas += venda.valor_total
 
-        self.fila_vendas.append(venda)
-        self.pilha_operacoes.append(("venda", venda))
+            self.fila_vendas.append(venda)
+            self.pilha_operacoes.append(("venda", venda))
 
-        print("Venda realizada com sucesso!")
-        print(venda)
-        self.salvar_estoque()
+            print("Venda realizada com sucesso!")
+            print(venda)
+            self.salvar_estoque()
+        except ValueError:
+            print("Quantidade inválida! Digite um número válido (ex: 1, 0.5, 2.3).")
 
     def visualizar_vendas(self):
         if not self.fila_vendas:
