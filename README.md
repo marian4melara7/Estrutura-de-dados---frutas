@@ -26,4 +26,10 @@ Ideal para estudos de listas, filas, pilhas e manipulação de arquivos.
 - Fila (deque) → Registra vendas em ordem de chegada
 - Pilha (list) → Suporta a função de desfazer última operação
 
-Feito por:
+Feito por: 
+- Arthur B. Spada
+- Emanoel da Rosa
+- Guilherme T. Castellani
+- Luis Thaylor 
+- Maria Eduarda B. Schulze
+- Mariana M. Melara
